@@ -1,0 +1,26 @@
+{
+  "name": "testing-by-jest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon ./src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "jest": "^30.1.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb-memory-server": "^10.2.1",
+    "mongoose": "^8.18.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0"
+  }
+}

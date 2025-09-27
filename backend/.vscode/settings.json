@@ -1,0 +1,7 @@
+{
+  "editor.fontFamily": "Comic Sans MS",
+  "editor.fontLigatures":true,     // makes symbols prettier like != → ≠
+  "editor.fontSize": 18,            // text size
+  "editor.lineHeight": 40,          // space between lines
+  "editor.letterSpacing": 2       // space between letters
+}
