@@ -1,0 +1,23 @@
+body{
+     padding: 0;
+     margin: 0;
+     box-sizing: border-box;
+     border: none;
+     overflow-x: hidden;
+     scroll-behavior: smooth;
+
+}
+.userForm{
+     width: 50% !important;
+     border: 3px solid rgb(105, 105, 105) !important;
+     margin: auto !important;
+     margin-top: 10px !important;
+      
+     display: flex !important;
+     justify-content: center !important;
+     align-items: center !important;
+     flex-direction: column !important;
+     gap: 10px !important;
+
+
+}
