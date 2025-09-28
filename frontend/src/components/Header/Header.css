@@ -1,0 +1,71 @@
+.header{
+     width: 100vw;
+
+
+    
+
+}
+.header .nav-bar ul *{
+       
+          text-decoration: none;
+          outline: none;
+          font-family: sans-serif;
+          color: black;
+          font-size: 17px;
+
+}
+.header .nav-bar{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 90%;
+     margin: auto;
+
+
+     
+}
+.header .nav-bar ul{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 10px;
+     list-style-type:none;
+     
+
+
+}
+.header .nav-bar ul li a:hover ul li{
+     border-bottom: 2px solid black;
+}
+.header .nav-bar .nav-logo{
+     display: flex;
+     gap: 10px;
+     align-items: center;
+     font-family: sans-serif;
+
+}
+.header .nav-bar .nav-logo span:first-child{
+     color: rgb(255, 42, 78);
+
+}
+.header .nav-bar .nav-logo span:last-child{
+     color: rgb(99, 99, 99);
+
+}
+
+.search-form{
+     width: 30%;
+
+}
+.search-form .search-input{
+     border: none !important;
+     outline: none !important;
+
+}
+.nav-link button{
+     font-size: 15px !important;
+     font-family: sans-serif !important;
+     color: rgb(103, 103, 103) !important;
+
+
+}

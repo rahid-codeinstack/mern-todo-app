@@ -8,8 +8,7 @@ body{
 
 }
 .userForm{
-     width: 50% !important;
-     border: 3px solid rgb(105, 105, 105) !important;
+     width: 60% !important;
      margin: auto !important;
      margin-top: 10px !important;
       
@@ -20,4 +19,11 @@ body{
      gap: 10px !important;
 
 
+}
+.form-header{
+     font-size: 25px;
+     font-family: sans-serif;
+     color: black;
+     font-weight: 900;
+     
 }

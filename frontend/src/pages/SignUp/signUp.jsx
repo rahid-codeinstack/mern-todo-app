@@ -32,7 +32,9 @@ function SignUp() {
           paddingInline: "10px",
         }}
       >
-        <h1> Sign up </h1>
+       <h1 className="form-header">
+       Sign Up 
+       </h1>
         <Box sx={{ width: "100%" }}>
           <Box sx={{ display: "flex", gap: "10px", width: "100%" }}>
             <TextField
