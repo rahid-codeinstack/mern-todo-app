@@ -1,12 +1,12 @@
 const express = require("express");
-const AuthRouter  = require("./src/routers/auth.routes.js");
+const AuthRouter  = require("./src/routers/auth.route.js");
 
 function createApp(){
-     const App = express();
-     App.use(express.json());
-     App.use(express.urlencoded({extended:true}));
-     App.use('/api/auth/',AuthRouter)
-     return  App;
+     const app = express();
+     app.use(express.json());
+     app.use(express.urlencoded({extended:true}));
+     app.use("/api/auth",AuthRouter);
+     return  app;
 }
 
 module.exports = createApp;

@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 .vscode*
-
+**/backend/*.env
 
 # node module folder 
 **/backend/node_modules
