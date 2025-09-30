@@ -108,7 +108,12 @@ const navigate = useNavigate();
       >
         <h1 className="form-header">Sign Up</h1>
         {errors.message && (
-          <Alert fullWidth  sx={{width:"90%", marginBlock:"10px"}}  variant="outlined" severity="error">
+          <Alert
+            fullWidth
+            sx={{ width: "90%", marginBlock: "10px" }}
+            variant="outlined"
+            severity="error"
+          >
             {errors.message}
           </Alert>
         )}
@@ -116,6 +121,7 @@ const navigate = useNavigate();
           <Box sx={{ display: "flex", gap: "10px", width: "100%" }}>
             <TextField
               label="First name"
+              data-testid="firstname-input"
               fullWidth
               onChange={(e) =>
                 setForm({ ...form, [e.target.id]: e.target.value })
@@ -128,6 +134,7 @@ const navigate = useNavigate();
             />
             <TextField
               label="Last name"
+              data-testid="lastname-input"
               fullWidth
               type="text"
               sx={{ marginBottom: "10px", borderRadius: "10px" }}
@@ -143,6 +150,7 @@ const navigate = useNavigate();
             <TextField
               label="username"
               type="username"
+              data-testid="username-input"
               fullWidth
               sx={{ marginBottom: "10px", borderRadius: "10px" }}
               onChange={(e) =>
@@ -155,6 +163,7 @@ const navigate = useNavigate();
             <TextField
               label="email"
               type="email"
+              data-testid="email-input"
               fullWidth
               sx={{ marginBottom: "10px", borderRadius: "10px" }}
               onChange={(e) =>
@@ -169,6 +178,7 @@ const navigate = useNavigate();
             <TextField
               label="password"
               type="password"
+              data-testid="password-input"
               fullWidth
               sx={{ marginBottom: "10px", borderRadius: "10px" }}
               onChange={(e) =>
@@ -180,6 +190,7 @@ const navigate = useNavigate();
             />
             <TextField
               label="confirm password"
+              data-testid="confirmpassword-input"
               type="text"
               fullWidth
               sx={{ marginBottom: "10px", borderRadius: "10px" }}
@@ -201,6 +212,7 @@ const navigate = useNavigate();
           >
             <Button
               onClick={(e) => handleSubmit(e)}
+              data-testid="submite-button"
               variant="outlined"
               sx={{
                 background: "blue",
