@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, TextField , FormControl, Button  , Alert } from "@mui/material";
+import { Box, TextField , FormControl, Button  , Alert, ButtonBase } from "@mui/material";
 import { postUser } from "../../services/user.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 
 
 function SignUp() {
@@ -226,6 +226,16 @@ const navigate = useNavigate();
               Sign up
             </Button>
           </Box>
+          <Box color={"black"} margin={'20px'} textAlign={"center"}  fontFamily={'sans-serif'}>
+            have already account ? 
+          </Box>
+         <Box color={'black'} textAlign={"center"} fontWeight={'900'} data-testid='navigation-box'>
+           <Link to={'/sign-in'} data-testid='link-to-sign-in' >
+            <Button>
+              Sign in 
+            </Button>
+            </Link>
+         </Box>
         </Box>
       </FormControl>
     </>

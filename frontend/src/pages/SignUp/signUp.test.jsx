@@ -1,4 +1,4 @@
-import { describe , test , expect , vi, beforeEach } from "vitest";
+import { describe , test , expect , vi, beforeEach, beforeAll } from "vitest";
 import { MemoryRouter} from "react-router-dom";
 import { render , fireEvent , screen  } from "@testing-library/react";
 import SignUp from "./signUp";
@@ -9,6 +9,9 @@ vi.mock("axios");
 vi.mock('react-router-dom', async ()=>{
      const actual = await vi.importActual("react-router-dom");
      return {...actual,useNavigate:()=>mockNavigate};
+})
+beforeAll(()=>{
+     vi.clearAllMocks();
 })
      test("user compnent must be on te document", async ()=>{
           render(
@@ -37,6 +40,7 @@ vi.mock('react-router-dom', async ()=>{
               .getByTestId("confirmpassword-input")
               .querySelector("input");
             const submiteButton = screen.getByText("Sign up");
+          
             expect(firstNameInput).toBeInTheDocument();
             expect(lastNameInput).toBeInTheDocument();
             expect(usernameInput).toBeInTheDocument();
@@ -44,6 +48,9 @@ vi.mock('react-router-dom', async ()=>{
             expect(password).toBeInTheDocument();
             expect(confirmpassword).toBeInTheDocument();
             expect(submiteButton).toBeInTheDocument();
+        
+            
+
             fireEvent.change(firstNameInput, { target: { value: "rahid" } });
             fireEvent.change(lastNameInput, { target: { value: "khan" } });
             fireEvent.change(usernameInput, {
@@ -57,6 +64,21 @@ vi.mock('react-router-dom', async ()=>{
             mockAxios.post.mockResolvedValue({success:true,message:"register successfully",status:201});
             fireEvent.click(submiteButton);
             mockNavigate("/sign-in");
+            
+          });
+          test('sign in link should be move to sign in page ', ()=>{
+                  render(
+                    <MemoryRouter>
+                      <SignUp />
+                      <SignIn />
+                    </MemoryRouter>
+                  );
+                 const navigationbox = screen.getByTestId("navigation-box");
+                 const signinLink = screen.getByTestId("link-to-sign-in");
+                 expect(navigationbox).toBeInTheDocument();
+                 expect(signinLink).toBeInTheDocument();
+                 fireEvent.click(signinLink);
+                 mockNavigate("/sign-in")
           })
         
 
