@@ -1,0 +1,82 @@
+const {MongoMemoryServer}  = require("mongodb-memory-server");
+const createApp = require("../../App.js");
+const mongoose = require("mongoose");
+const userModel = require("../models/usermodel.js");
+const request = require("supertest");
+
+let mongoServer , app ;
+describe('auth integration testing ', ()=>{
+     beforeAll( async ()=>{
+          mongoServer = await MongoMemoryServer.create();
+          const mongoUri = mongoServer.getUri()
+          await mongoose.connect(mongoUri)
+          app = createApp();
+     
+     });
+     beforeEach( async()=>{
+          const collection = mongoose.connection.collections;
+          for(let i in collection){
+         await collection[i].deleteMany({});
+          }
+     })
+     afterAll( async()=>{
+          await mongoServer.stop();
+          if(mongoServer){
+               await mongoose.disconnect();
+          }
+         
+          
+          
+     })
+     describe('register function request user must be register ', () =>{
+
+          test('register function integration testing  this registeration functjion must create new user ', async()=>{
+        const newUser = {
+             firstname:"rahid",lastname:"khan",username:"rahidTanha",email:"rahidtanha@email.com",password:"rahidkhan1223"
+         }
+          const resulte = await request(app).post("/api/auth/register").send(newUser);
+          expect(resulte.body.success).toBeTruthy();
+          expect(resulte.body.success).toBeTruthy();
+     });
+          test('register function must be create an error when some try register user two time  ', async()=>{
+        const newUser = {
+             firstname:"rahid",lastname:"khan",username:"rahidTanha",email:"rahidtanha@email.com",password:"rahidkhan1223"
+         }
+          const resulte = await request(app).post("/api/auth/register").send(newUser);
+          expect(resulte.body.success).toBeTruthy();
+               const resulte2 = await request(app).post("/api/auth/register").send(newUser);
+               expect(resulte2.body.message).toBe("this user already exist");
+               expect(resulte2.body.status).toBe(429)
+     });
+          test('register function must be create an error when some use firstname short  ', async()=>{
+        const newUser = {
+             firstname:"r",lastname:"khan",username:"rahidTanha",email:"rahidtanha@email.com",password:"rahidkhan1223"
+         }
+          const resulte = await request(app).post("/api/auth/register").send(newUser);
+          expect(resulte.body.success).toBeFalsy();
+         expect(resulte.body.message).toBe("firstname must be atleast 4 character");
+          
+     });
+          test('register function must be create an error when some one use short password  ', async()=>{
+        const newUser = {
+             firstname:"rahidkhan",lastname:"khan",username:"rahidTanha",email:"rahidtanha@email.com",password:"r"
+         }
+          const resulte = await request(app).post("/api/auth/register").send(newUser);
+          expect(resulte.body.success).toBeFalsy();
+         expect(resulte.body.message).toBe("password must be atleast 6 character");
+          
+     });
+          test('register function must be create an error when some register with invalid email type ', async()=>{
+        const newUser = {
+             firstname:"rahidkhan",lastname:"khan",username:"rahidTanha",email:"rahidtanhemail.com",password:"rahidkhan"
+         }
+          const resulte = await request(app).post("/api/auth/register").send(newUser);
+          expect(resulte.body.success).toBeFalsy();
+         expect(resulte.body.message).toBe("invalid email type");
+          
+     });
+
+
+
+ })
+})
