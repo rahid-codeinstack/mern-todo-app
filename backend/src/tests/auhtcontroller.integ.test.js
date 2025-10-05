@@ -36,7 +36,6 @@ describe('auth integration testing ', ()=>{
          }
           const resulte = await request(app).post("/api/auth/register").send(newUser);
           expect(resulte.body.success).toBeTruthy();
-          expect(resulte.body.success).toBeTruthy();
      });
           test('register function must be create an error when some try register user two time  ', async()=>{
         const newUser = {
@@ -75,7 +74,7 @@ describe('auth integration testing ', ()=>{
          expect(resulte.body.message).toBe("invalid email type");
           
      });
-
+     
 
 
  })

@@ -1,7 +1,14 @@
 const userModel = require("../models/usermodel.js");
-const { registerService }= require("../services/auth.service.js");
+const jwt = require("jsonwebtoken");
+const { registerService , loginUser }= require("../services/auth.service.js");
+const bcrypt  = require("bcrypt");
 jest.mock("../models/usermodel.js")
+jest.mock('jsonwebtoken')
+jest.mock("bcrypt");
 describe("auth services tesing ", ()=>{
+     beforeEach(()=>{
+          jest.clearAllMocks();
+     });
 test("user registration services tesing ",  async ()=>{
      userModel.findOne.mockResolvedValue(null);
      const newUser = {
@@ -84,5 +91,47 @@ test("when some add invalid email type it shoud be create error", async()=>{
        const resulte = await registerService(newUser.firstname,newUser.lastname,newUser.username,newUser.email,newUser.password);
       expect(resulte.message).toBe("invalid email type");
 });
+
+describe("user login route function testing ", ()=>{
+     test("test when user input are correct like email and password then  he should login " ,  async ()=>{
+          userModel.findOne.mockResolvedValue({firstname:"rahid",lastname:"khan",username:"rahidtanha", email:"rahidtanha@email.com",password:"rahidkhan123"});
+          bcrypt.compareSync.mockReturnValue(true);
+          const user= {
+               email:"rahidtanha@email.com",
+               password: "rahidkhan12",
+          }
+          const result = await loginUser(user.email,user.password);
+          expect(result.user).toEqual({firstname:"rahid",lastname:"khan",username:"rahidtanha", email:"rahidtanha@email.com",password:"rahidkhan123"});
+          expect(bcrypt.compareSync).toHaveBeenCalled();
+          expect(userModel.findOne).toHaveBeenCalled()
+          expect(userModel.findOne).toHaveBeenCalledTimes(1)
+          expect(userModel.findOne).toHaveBeenCalledWith({email:user.email})
+          
+     })
+     test("when some try to login with incorrect password it should create an error " ,  async ()=>{
+          userModel.findOne.mockResolvedValue({firstname:"rahid",lastname:"khan",username:"rahidtanha", email:"rahidtanha@email.com",password:"rahidkhan123"});
+          bcrypt.compareSync.mockReturnValue(null);
+          const user= {
+               email:"rahidtanha@email.com",
+               password: "rahi",
+          }
+          const result = await loginUser(user.email,user.password);
+        expect(result.message).toBe("wrong credential");
+        expect(result.status).toBe(404);
+          
+     })
+     test("when some try to login with incorrect email it should create error  " ,  async ()=>{
+          userModel.findOne.mockResolvedValue(null);
+          bcrypt.compareSync.mockReturnValue(null);
+          const user= {
+               email:"rahidtanha@email.com",
+               password: "rahi",
+          }
+          const result = await loginUser(user.email,user.password);
+        expect(result.message).toBe("wrong email or password");
+        expect(result.status).toBe(404);
+          
+     })
+})
 
 })
