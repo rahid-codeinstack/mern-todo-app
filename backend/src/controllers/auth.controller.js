@@ -1,6 +1,9 @@
 const {registerService , loginUser} = require("../services/auth.service.js");
 const jwt = require("jsonwebtoken");
 
+
+// user register route functionality;
+
  async function register (req,res,next){
      const {firstname,lastname,username,email,password}  = req.body;
      const resulte =   await registerService(firstname,lastname,username,email,password);
@@ -11,25 +14,28 @@ const jwt = require("jsonwebtoken");
      res.status(resulte.status).json(resulte);
      }
 }
-async function login (req,res){
-     const {email,password} = req.body;
-     const logineUserRes = await loginUser(email,password);
-     if(!logineUserRes.success ){
-          res.status(loginUser.status).json({
-               success:loginUser.success,
-               message: loginUser.message,
-               status:loginUser.status,    
-               serverError: loginUser.error ? loginUser.error : "",
-          })
 
+
+
+
+// user logine route functinality
+
+async function login (req,res){
+   try {
+       const {email,password} = req.body;
+     const logineUserRes = await loginUser(email,password);
+     if(!logineUserRes.success){
+          res.status(logineUserRes.status).json(logineUserRes);
+          return;
+     }else{
+           const token = jwt.sign({_id:logineUserRes._id},process.env.JWT_SECRET);
+           logineUserRes.token = token;
+           res.cookie("access_token",token,{maxAge: 10 * 60 * 60 * 24}).status(logineUserRes.status).json(logineUserRes);
      }
-     const token  = jwt.sign({_id:loginUser.user._id},process.env.JWT_SECRET);
-     res.cookie('secret_token',token,{maxAge:10*60*60})
-     .status(loginUser.status).json({
-          message:loginUser.message,
-          status:loginUser.status,
-          success:loginUser.success,
-     })
+   } catch (error) {
+     res.send({success:false,message:error.message,status:500,});
+   }
+    
 }
 module.exports = {
      register

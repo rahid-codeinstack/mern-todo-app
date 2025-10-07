@@ -29,36 +29,26 @@ async function registerService(firstname , lastname , username , email , passwor
 
 // user logine controller ;
  async function loginUser (email,password){
-     try {
-               const validUser = await userModel.findOne({email:email});
-               if(!validUser){
-                    return {
-                         status:404,success:false,message:"wrong email or password",
-                    }
-               }
-               const validpassword = bcrypt.compareSync(password,validUser.hashPassword);
-               if(!validpassword){
-                    return {
-                              success:false,
-                              message:"wrong credential",
-                              status:404,
-                    }
-               }
-   
-               return {
-                    user:validUser,
-                    message:"login successfully",
-                    status:200,
-                    success:true,
-               }
-     } catch (error) {
-               return {
-                    status:500,
-                    message:"some thing wrong locally in server",
-                    success:false,
-                    Error:error.message, 
-               }
-     }
+const validUser = await userModel.findOne({email:email});
+if(!validUser){
+return {
+ status:404,success:false,message:"wrong email or password",
+ }
+}
+const validpassword = bcrypt.compareSync(password,validUser.password);
+if(!validpassword){
+ return {
+success:false,
+ message:"wrong credential",
+ status:404,
+}
+}
+ return {
+ user:validUser,
+ message:"login successfully",
+ status:200,
+ success:true,
+ }
 }
 
 module.exports = {registerService , loginUser };
